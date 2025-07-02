@@ -39,8 +39,47 @@ const updateUser = async (req,res) => {
     }
 }
 
+const loginUser = async(req,res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await userService.loginUser(email, password);
+        if (!user) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+        return res.status(200).json(user);
+    } catch (error) {
+        // console.error("Error logging in:", error);
+        return res.status(500).json({ message: "Error al iniciar sesión", error: error.message });
+    }
+}
+
+const addFriend = async (req,res) => {
+    const { userId, friendId } = req.body;
+    try {
+        const updatedUser = await userService.addFriend(userId, friendId);
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        // console.error("Error adding friend:", error);
+        return res.status(500).json({ message: "Error al agregar amigo", error: error.message });
+    }
+}
+
+const getAllMyFriends = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const friends = await userService.getAllMyFriends(userId);
+        return res.status(200).json(friends);
+    } catch (error) {
+        // console.error("Error fetching friends:", error);
+        return res.status(500).json({ message: "Error al obtener amigos", error: error.message });
+    }
+}
+
 module.exports = {
     createUser,
     getUserById,
-    updateUser
+    updateUser,
+    loginUser,
+    addFriend,
+    getAllMyFriends
 }
