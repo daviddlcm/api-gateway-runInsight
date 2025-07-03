@@ -23,11 +23,46 @@ const getAllMyFriends = async (userId) => {
     return await userInfraStructure.getAllMyFriends(userId)
 }
 
+const updateTrainingCounter = async (userId) => {
+    return await userInfraStructure.updateTrainingCounter(userId)
+}
+
+const updateKilometers = async (userId, kilometers) => {
+    return await userInfraStructure.updateKilometers(userId, kilometers)
+}
+
+const updateBestRythm = async (userId, bestRhythm) => {
+    return await userInfraStructure.updateBestRythm(userId, bestRhythm)
+}
+const addEvent = async (userId, file, dateEvent) => {
+    return await userInfraStructure.addEvent(userId, file, dateEvent)
+}
+
+const getAllEvents = async () => {
+    return await userInfraStructure.getAllEvents()
+}
+
+const getEventById = async (eventId) => {
+    return await userInfraStructure.getEventById(eventId)
+}
+
+const getEventFuture = async (date) => {
+    //console.log(date)
+    return await userInfraStructure.getEventFuture(date)
+}
+
 module.exports = {
     createUser,
     getUserById,
     updateUser,
     loginUser,
     addFriend,
-    getAllMyFriends
+    getAllMyFriends,
+    updateTrainingCounter,
+    updateKilometers,
+    updateBestRythm,
+    addEvent,
+    getAllEvents,
+    getEventById,
+    getEventFuture
 }
