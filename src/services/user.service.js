@@ -51,6 +51,22 @@ const getEventFuture = async (date) => {
     return await userInfraStructure.getEventFuture(date)
 }
 
+const getAllBadges = async () => {
+    return await userInfraStructure.getAllBadges()
+}
+
+const getBadgeById = async (badgeId) => {
+    return await userInfraStructure.getBadgeById(badgeId)
+}
+
+const getBadgesByUserId = async (userId) => {
+    return await userInfraStructure.getBadgesByUserId(userId)
+}
+
+const addBadgeToUser = async (userId, badgeId) => {
+    return await userInfraStructure.addBadgeToUser(userId, badgeId)
+}
+
 module.exports = {
     createUser,
     getUserById,
@@ -64,5 +80,9 @@ module.exports = {
     addEvent,
     getAllEvents,
     getEventById,
-    getEventFuture
+    getEventFuture,
+    getAllBadges,
+    getBadgeById,
+    getBadgesByUserId,
+    addBadgeToUser
 }

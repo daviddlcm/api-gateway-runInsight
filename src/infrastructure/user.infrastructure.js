@@ -119,6 +119,33 @@ const getEventFuture = async (date) => {
   return response.data;
 };
 
+const getAllBadges = async () => {
+  const response = await axios.get(`${userServiceUrl}/badges`);
+  console.log(response.data)
+  return response.data;
+}
+
+const getBadgeById = async (badgeId) => {
+  const response = await axios.get(`${userServiceUrl}/badges/${badgeId}`);
+  return response.data;
+};
+
+const getBadgesByUserId = async (userId) => {
+  const response = await axios.get(`${userServiceUrl}/badges/user/${userId}`);
+  return response.data;
+};
+
+const addBadgeToUser = async (userId, badgeId) => {
+  const response = await axios.post(`${userServiceUrl}/badges/user`, {
+    badgeId,
+  }, {
+    headers: {
+      "user-id": userId
+    }
+  });
+  return response.data;
+}
+
 module.exports = {
   postUser,
   getUserById,
@@ -132,5 +159,9 @@ module.exports = {
   addEvent,
   getAllEvents,
   getEventById,
-  getEventFuture
+  getEventFuture,
+  getAllBadges,
+  getBadgeById,
+  getBadgesByUserId,
+  addBadgeToUser
 };

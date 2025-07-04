@@ -207,6 +207,62 @@ const getEventFuture = async (req, res) => {
   }
 };
 
+const getAllBadges = async (req, res) => {
+  try {
+    //console.log("Fetching all badges");
+    const badges = await userService.getAllBadges();
+    return res.status(200).json(badges);
+  } catch (error) {
+    // console.error("Error fetching badges:", error);
+    return res
+      .status(500)
+      .json({ message: "Error al obtener insignias", error: error.message });
+  }
+}
+
+const getBadgesByUserId = async (req, res) => {
+  const userId = req.params.id;
+  const userIdMe = req.headers["user-id"];
+  try {
+    const badges = await userService.getBadgesByUserId(userId);
+    return res.status(200).json(badges);
+  } catch (error) {
+    // console.error("Error fetching badges by user ID:", error);
+    return res
+      .status(500)
+      .json({ message: "Error al obtener insignias del usuario", error: error.message });
+  }
+}
+
+const getBadgeById = async (req, res) => {
+  const badgeId = req.params.id;
+  try {
+    const badge = await userService.getBadgeById(badgeId);
+    return res.status(200).json(badge);
+  } catch (error) {
+    // console.error("Error fetching badge:", error);
+    return res
+      .status(500)
+      .json({ message: "Error al obtener insignia", error: error.message });
+  }
+};
+
+const addBadgeToUser = async (req, res) => {
+  const userId = req.headers["user-id"];
+  //console.log(userId)
+  const { badgeId } = req.body;
+  //console.log(badgeId)
+  try {
+    const updatedUser = await userService.addBadgeToUser(userId, badgeId);
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    // console.error("Error adding badge to user:", error);
+    return res
+      .status(500)
+      .json({ message: "Error al agregar insignia al usuario", error: error.message });
+  }
+};
+
 module.exports = {
   createUser,
   getUserById,
@@ -221,4 +277,8 @@ module.exports = {
   getAllEvents,
   getEventById,
   getEventFuture,
+  getAllBadges,
+  getBadgeById,
+  getBadgesByUserId,
+  addBadgeToUser
 };

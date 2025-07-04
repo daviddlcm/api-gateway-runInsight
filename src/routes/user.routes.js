@@ -32,4 +32,12 @@ router.get("/events/:id", authMiddleware, userController.getEventById)
 
 router.get("/events/by/future", authMiddleware, userController.getEventFuture)
 
+router.get("/badges/all", authMiddleware, userController.getAllBadges)
+
+router.get("/badges/:id", authMiddleware, userController.getBadgeById)
+
+router.get("/badges/user/:id", authMiddleware, userController.getBadgesByUserId)
+
+router.post("/badges/user", authMiddleware, userController.addBadgeToUser)
+
 module.exports = router
