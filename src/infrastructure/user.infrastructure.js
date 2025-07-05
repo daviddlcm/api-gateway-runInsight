@@ -5,10 +5,10 @@ const fs = require("fs-extra");
 const path = require("path");
 
 //console.log("User Service URL:", userServiceUrl);
-console.log("User Service URL:", process.env.USER_SERVICE_URL);
+//console.log("User Service URL:", process.env.USER_SERVICE_URL);
 
 const postUser = async (requestUser) => {
-
+  console.log("User Service URL:", userServiceUrl);
   console.log("Request User:", requestUser);
   const response = await axios.post(`${userServiceUrl}/users`, requestUser);
   console.log("Response from User Service:", response.data);
