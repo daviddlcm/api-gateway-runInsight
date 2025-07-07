@@ -4,6 +4,7 @@ const fs = require("fs-extra");
 const createUser = async (req, res) => {
   const user = req.body;
   try {
+    //console.log("Creating user:", user);
     const createdUser = await userService.createUser(user);
     return res.status(201).json(createdUser);
   } catch (error) {
@@ -146,6 +147,13 @@ const addEvent = async (req, res) => {
     //console.log("File received:", req.file);
     // const tempPath = "./temp/" + file.name;
     // await file.mv(tempPath);
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    
+    if(!dateEvent) {
+      return res.status(400).json({ message: "No date provided" });
+    }
 
     const event = await userService.addEvent(userId, file, dateEvent);
 
