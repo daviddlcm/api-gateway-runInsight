@@ -15,10 +15,12 @@ app.use(express.urlencoded({extended:false}))
 const PORT = process.env.PORT || 3000;
 
 const userRoutes = require("./src/routes/user.routes")
+const trainingRoutes = require("./src/routes/training.routes")
 
 app.use(express.json());
 
 app.use("/users",userRoutes)
+app.use("/trainings", trainingRoutes)
 
 app.listen(PORT,() => {
     console.log(`Server is running on port ${PORT}`);

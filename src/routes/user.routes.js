@@ -26,23 +26,23 @@ router.post("/friends", authMiddleware, validate(addFriendSchema) ,userControlle
 
 router.get("/friends/:id", authMiddleware, userController.getAllMyFriends);
 
-router.patch(
-  "/training/:id",
-  authMiddleware,
-  userController.updateTrainingCounter
-);
+// router.patch(
+//   "/training/:id",
+//   authMiddleware,
+//   userController.updateTrainingCounter
+// );
 
-router.patch(
-  "/kilometres/:id",
-  authMiddleware,
-  userController.updateKilometers
-);
+// router.patch(
+//   "/kilometres/:id",
+//   authMiddleware,
+//   userController.updateKilometers
+// );
 
-router.patch(
-  "/best-rhythm/:id",
-  authMiddleware,
-  userController.updateBestRythm
-);
+// router.patch(
+//   "/best-rhythm/:id",
+//   authMiddleware,
+//   userController.updateBestRythm
+// );
 
 router.post(
   "/event/:id",
@@ -67,6 +67,6 @@ router.get(
   userController.getBadgesByUserId
 );
 
-router.post("/badges/user",authMiddleware,  validate(addBadgeToUserSchema), userController.addBadgeToUser);
+//router.post("/badges/user",authMiddleware,  validate(addBadgeToUserSchema), userController.addBadgeToUser);
 
 module.exports = router;

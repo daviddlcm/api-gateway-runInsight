@@ -92,49 +92,8 @@ const getAllMyFriends = async (req, res) => {
       .json({ message: "Error al obtener amigos", error: error.message });
   }
 };
-const updateTrainingCounter = async (req, res) => {
-  const userId = req.params.id;
-  try {
-    const updatedUser = await userService.updateTrainingCounter(userId);
-    return res.status(200).json(updatedUser);
-  } catch (error) {
-    // console.error("Error updating training counter:", error);
-    return res.status(500).json({
-      message: "Error al actualizar contador de entrenamiento",
-      error: error.message,
-    });
-  }
-};
 
-const updateKilometers = async (req, res) => {
-  const userId = req.params.id;
-  const { kilometers } = req.body;
-  try {
-    const updatedUser = await userService.updateKilometers(userId, kilometers);
-    return res.status(200).json(updatedUser);
-  } catch (error) {
-    // console.error("Error updating kilometres:", error);
-    return res.status(500).json({
-      message: "Error al actualizar kilómetros",
-      error: error.message,
-    });
-  }
-};
 
-const updateBestRythm = async (req, res) => {
-  const userId = req.params.id;
-  const { best_rhythm } = req.body;
-  try {
-    const updatedUser = await userService.updateBestRythm(userId, best_rhythm);
-    return res.status(200).json(updatedUser);
-  } catch (error) {
-    // console.error("Error updating best rhythm:", error);
-    return res.status(500).json({
-      message: "Error al actualizar mejor ritmo",
-      error: error.message,
-    });
-  }
-};
 
 const addEvent = async (req, res) => {
   // Assuming you're using multer for file uploads
@@ -278,9 +237,6 @@ module.exports = {
   loginUser,
   addFriend,
   getAllMyFriends,
-  updateTrainingCounter,
-  updateKilometers,
-  updateBestRythm,
   addEvent,
   getAllEvents,
   getEventById,
