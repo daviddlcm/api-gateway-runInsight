@@ -23,17 +23,22 @@ const getAllMyFriends = async (userId) => {
     return await userInfraStructure.getAllMyFriends(userId)
 }
 
-const updateTrainingCounter = async (userId) => {
-    return await userInfraStructure.updateTrainingCounter(userId)
+// const updateTrainingCounter = async (userId) => {
+//     return await userInfraStructure.updateTrainingCounter(userId)
+// }
+
+// const updateKilometers = async (userId, kilometers) => {
+//     return await userInfraStructure.updateKilometers(userId, kilometers)
+// }
+
+// const updateBestRythm = async (userId, bestRhythm) => {
+//     return await userInfraStructure.updateBestRythm(userId, bestRhythm)
+// }
+
+const updateCounterKmRhythm = async (idUserMe,rhythm,km) => {
+    return await userInfraStructure.updateRythmKmCounter(idUserMe,rhythm,km)
 }
 
-const updateKilometers = async (userId, kilometers) => {
-    return await userInfraStructure.updateKilometers(userId, kilometers)
-}
-
-const updateBestRythm = async (userId, bestRhythm) => {
-    return await userInfraStructure.updateBestRythm(userId, bestRhythm)
-}
 const addEvent = async (userId, file, dateEvent) => {
     return await userInfraStructure.addEvent(userId, file, dateEvent)
 }
@@ -74,9 +79,10 @@ module.exports = {
     loginUser,
     addFriend,
     getAllMyFriends,
-    updateTrainingCounter,
-    updateKilometers,
-    updateBestRythm,
+    // updateTrainingCounter,
+    // updateKilometers,
+    // updateBestRythm,
+    updateCounterKmRhythm,
     addEvent,
     getAllEvents,
     getEventById,

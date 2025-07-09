@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
     // console.error("Error creating user:", error);
     return res
       .status(500)
-      .json({ message: "Error al crear usuario", error: error.message });
+      .json({ message: "Error al crear usuario", error: error.response.data.error });
   }
 };
 
@@ -29,7 +29,7 @@ const getUserById = async (req, res) => {
     // console.error("Error fetching user:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener un usuario", error: error.message });
+      .json({ message: "Error al obtener un usuario", error: error.response.data.error });
   }
 };
 
@@ -46,7 +46,7 @@ const updateUser = async (req, res) => {
     // console.error("Error updating user:", error);
     return res.status(500).json({
       message: "Error al actualizar un usuario",
-      error: error.message,
+      error: error.response.data.error,
     });
   }
 };
@@ -55,15 +55,13 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await userService.loginUser(email, password);
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+    
     return res.status(200).json(user);
   } catch (error) {
     // console.error("Error logging in:", error);
     return res
       .status(500)
-      .json({ message: "Error al iniciar sesión", error: error.message });
+      .json({ message: "Error al iniciar sesión", error: error.response.data.error });
   }
 };
 
@@ -76,7 +74,7 @@ const addFriend = async (req, res) => {
     // console.error("Error adding friend:", error);
     return res
       .status(500)
-      .json({ message: "Error al agregar amigo", error: error.message });
+      .json({ message: "Error al agregar amigo", error: error.response.data.error });
   }
 };
 
@@ -89,7 +87,7 @@ const getAllMyFriends = async (req, res) => {
     // console.error("Error fetching friends:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener amigos", error: error.message });
+      .json({ message: "Error al obtener amigos", error: error.response.data.error });
   }
 };
 
@@ -126,7 +124,7 @@ const addEvent = async (req, res) => {
     // console.error("Error adding event:", error);
     return res
       .status(500)
-      .json({ message: "Error al agregar evento", error: error.message });
+      .json({ message: "Error al agregar evento", error: error.response.data.error, errorCode: error.message });
   }
 };
 
@@ -139,7 +137,7 @@ const getAllEvents = async (req, res) => {
     // console.error("Error fetching events:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener eventos", error: error.message });
+      .json({ message: "Error al obtener eventos", error: error.response.data.error });
   }
 };
 
@@ -152,7 +150,7 @@ const getEventById = async (req, res) => {
     // console.error("Error fetching event:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener evento", error: error.message });
+      .json({ message: "Error al obtener evento", error: error.response.data.error });
   }
 };
 
@@ -169,7 +167,7 @@ const getEventFuture = async (req, res) => {
       .status(500)
       .json({
         message: "Error al obtener eventos futuros",
-        error: error.message,
+        error: error.response.data.error,
       });
   }
 };
@@ -183,7 +181,7 @@ const getAllBadges = async (req, res) => {
     // console.error("Error fetching badges:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener insignias", error: error.message });
+      .json({ message: "Error al obtener insignias", error: error.response.data.error });
   }
 }
 
@@ -197,7 +195,7 @@ const getBadgesByUserId = async (req, res) => {
     // console.error("Error fetching badges by user ID:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener insignias del usuario", error: error.message });
+      .json({ message: "Error al obtener insignias del usuario", error: error.response.data.error });
   }
 }
 
@@ -210,7 +208,7 @@ const getBadgeById = async (req, res) => {
     // console.error("Error fetching badge:", error);
     return res
       .status(500)
-      .json({ message: "Error al obtener insignia", error: error.message });
+      .json({ message: "Error al obtener insignia", error: error.response.data.error });
   }
 };
 
@@ -226,7 +224,7 @@ const addBadgeToUser = async (req, res) => {
     // console.error("Error adding badge to user:", error);
     return res
       .status(500)
-      .json({ message: "Error al agregar insignia al usuario", error: error.message });
+      .json({ message: "Error al agregar insignia al usuario", error: error.response.data.error });
   }
 };
 

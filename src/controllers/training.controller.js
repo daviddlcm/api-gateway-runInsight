@@ -11,7 +11,7 @@ const createTraining = async (req,res) => {
         //const createdTraining = { message:"true"}
         return res.status(201).json(createdTraining);
     }catch(error){
-        return res.status(500).json({message: "Error al crear el entrenamiento", error: error.message})
+        return res.status(500).json({message: "Error al crear el entrenamiento", error: error.response.data.error})
     }
 }
 
@@ -27,7 +27,8 @@ const getTrainingById = async (req, res) => {
         
         return res.status(200).json(training);
     } catch (error) {
-        return res.status(500).json({ message: "Error al obtener el entrenamiento", error: error.message });
+        //console.log(error.response.data)
+        return res.status(500).json({ message: "Error al obtener el entrenamiento", error: error.response.data.error });
     }
 }
 
@@ -59,7 +60,7 @@ const getWeeklyTrainingsByUserId = async (req, res) => {
         
         return res.status(200).json(trainings);
     } catch (error) {
-        return res.status(500).json({ message: "Error al obtener los entrenamientos semanales", error: error.message });
+        return res.status(500).json({ message: "Error al obtener los entrenamientos semanales", error: error.response.data.error });
     }
 }
 

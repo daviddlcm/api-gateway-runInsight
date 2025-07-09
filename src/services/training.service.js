@@ -4,12 +4,10 @@ const createTraining = async (userId,trainingData) => {
     const trainingResponse = await trainingInfrastructure.createTraining(userId,trainingData);
 
     const {distance_km, rhythm } = trainingData;
+    //console.log("Entro: ", userId,distance_km, rhythm)
+    const response = await userInfrastructure.updateRythmKmCounter(userId,rhythm,distance_km)
+    //console.log(response)
 
-    await Promise.all([
-        userInfrastructure.updateTrainingCounter(userId),
-        userInfrastructure.updateKilometers(userId, distance_km),
-        userInfrastructure.updateBestRythm(userId, rhythm)
-    ])
     return trainingResponse;
 }
 

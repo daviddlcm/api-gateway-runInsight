@@ -48,28 +48,21 @@ const getAllMyFriends = async (userId) => {
   return response.data;
 };
 
-const updateTrainingCounter = async (userId) => {
-  const response = await axios.patch(
-    `${userServiceUrl}/users/training/${userId}`
-  );
+const updateRythmKmCounter = async (userIdMe, rhythm, km) => {
+  // console.log("Updating rhythm and km for user:", userIdMe);
+  // console.log("Rhythm:", rhythm, "KM:", km);
+  const response = await axios.patch(`${userServiceUrl}/users/stats`,{
+    rhythm,
+    km
+  }, {
+    headers: {
+      "user-id": userIdMe
+    }
+  });
+  
+  //console.log("data: ",response)
   return response.data;
-};
-
-const updateKilometers = async (userId, kilometers) => {
-  const response = await axios.patch(
-    `${userServiceUrl}/users/kilometers/${userId}`,
-    { kilometers }
-  );
-  return response.data;
-};
-
-const updateBestRythm = async (userId, bestRhythm) => {
-  const response = await axios.patch(
-    `${userServiceUrl}/users/best-rhythm/${userId}`,
-    { bestRhythm }
-  );
-  return response.data;
-};
+}
 
 const addEvent = async (userId, file,dateEvent) => {
   const formData = new FormData();
@@ -124,7 +117,7 @@ const getEventFuture = async (date) => {
 
 const getAllBadges = async () => {
   const response = await axios.get(`${userServiceUrl}/badges`);
-  console.log(response.data)
+  //console.log(response.data)
   return response.data;
 }
 
@@ -156,9 +149,6 @@ module.exports = {
   loginUser,
   addFriend,
   getAllMyFriends,
-  updateTrainingCounter,
-  updateKilometers,
-  updateBestRythm,
   addEvent,
   getAllEvents,
   getEventById,
@@ -166,5 +156,6 @@ module.exports = {
   getAllBadges,
   getBadgeById,
   getBadgesByUserId,
-  addBadgeToUser
+  addBadgeToUser,
+  updateRythmKmCounter
 };
