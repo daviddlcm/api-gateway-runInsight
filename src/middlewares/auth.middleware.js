@@ -24,6 +24,7 @@ const authMiddleware = async(req,res,next) =>{
 
         if(response.data.user){
             req.headers["user-id"] = response.data.user.id
+            req.headers["id-role"] = response.data.user.rolesId
             
             next()
         } else {

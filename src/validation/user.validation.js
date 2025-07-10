@@ -22,6 +22,7 @@ const loginSchema = Joi.object({
 const updateUserStatsSchema = Joi.object({
   weight: Joi.number().positive().required(),
   height: Joi.number().positive().required(),
+  experience: Joi.string().valid("Principiante", "Intermedio", "Avanzado","Experto","Maestro").required()
 });
 
 const addBadgeToUserSchema = Joi.object({
@@ -33,20 +34,10 @@ const addFriendSchema = Joi.object({
     friendId: Joi.number().required(),
 })
 
-// const updateKilometersSchema = Joi.object({
-//   kilometers: Joi.number().positive().required(),
-// });
-
-// const updateBestRhythmSchema = Joi.object({
-//   bestRhythm: Joi.number().positive().required(),
-// });
-
 module.exports = {
   createUserSchema,
   loginSchema,
   updateUserStatsSchema,
   addBadgeToUserSchema,
   addFriendSchema
-//   updateKilometersSchema,
-//   updateBestRhythmSchema,
 };

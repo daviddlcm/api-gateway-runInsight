@@ -87,6 +87,7 @@ const fileUpload = require("express-fileupload");
  *       required:
  *         - weight
  *         - height
+ *         - experience
  *       properties:
  *         weight:
  *           type: number
@@ -96,6 +97,10 @@ const fileUpload = require("express-fileupload");
  *           type: number
  *           minimum: 0
  *           description: Nueva altura en cm
+ *         experience:
+ *            type: string
+ *            enum: [Principiante, Intermedio, Avanzado, Experto, Maestro]
+ *            description: Nivel de experiencia del usuario
  *     AddFriend:
  *       type: object
  *       required:
@@ -318,7 +323,12 @@ router.get("/:id", authMiddleware, userController.getUserById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch("/:id",authMiddleware,  validate(updateUserStatsSchema),userController.updateUser);
+router.patch(
+  "/:id",
+  authMiddleware,
+  validate(updateUserStatsSchema),
+  userController.updateUser
+);
 
 /**
  * @swagger
@@ -409,7 +419,12 @@ router.post("/login", validate(loginSchema), userController.loginUser);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/friends", authMiddleware, validate(addFriendSchema) ,userController.addFriend);
+router.post(
+  "/friends",
+  authMiddleware,
+  validate(addFriendSchema),
+  userController.addFriend
+);
 
 /**
  * @swagger

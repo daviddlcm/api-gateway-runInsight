@@ -104,6 +104,10 @@ const addEvent = async (req, res) => {
     //console.log("File received:", req.file);
     // const tempPath = "./temp/" + file.name;
     // await file.mv(tempPath);
+    const userRole = req.headers["id-role"];
+    if(userRole == 2){
+      return res.status(403).json({ message: "No tienes permisos para agregar eventos" });
+    }
     if (!file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
