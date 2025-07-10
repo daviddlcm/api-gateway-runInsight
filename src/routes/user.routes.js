@@ -132,10 +132,11 @@ const fileUpload = require("express-fileupload");
  *           type: string
  *           description: Detalles del error
  *   securitySchemes:
- *     BearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *     TokenAuth:
+ *       type: apiKey
+ *       in: header
+ *       name: token
+ *       description: Token de autenticación JWT
  */
 
 /**
@@ -180,14 +181,8 @@ router.post("/", validate(createUserSchema), userController.createUser);
  *     summary: Obtener usuario por ID
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -286,14 +281,8 @@ router.get("/:id", authMiddleware, userController.getUserById);
  *     summary: Actualizar estadísticas del usuario
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -390,14 +379,7 @@ router.post("/login", validate(loginSchema), userController.loginUser);
  *     summary: Agregar amigo
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
+ *       - TokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -436,14 +418,8 @@ router.post("/friends", authMiddleware, validate(addFriendSchema) ,userControlle
  *     summary: Obtener todos los amigos de un usuario
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -511,14 +487,8 @@ router.get("/friends/:id", authMiddleware, userController.getAllMyFriends);
  *     summary: Agregar evento para un usuario
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -582,14 +552,7 @@ router.post(
  *     summary: Obtener todos los eventos
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
+ *       - TokenAuth: []
  *     responses:
  *       200:
  *         description: Lista de eventos obtenida exitosamente
@@ -654,14 +617,8 @@ router.get("/events/all", authMiddleware, userController.getAllEvents);
  *     summary: Obtener evento por ID
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -730,14 +687,8 @@ router.get("/events/:id", authMiddleware, userController.getEventById);
  *     summary: Obtener eventos futuros
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: query
  *         name: date
  *         required: true
@@ -809,14 +760,7 @@ router.get("/events/by/future", authMiddleware, userController.getEventFuture);
  *     summary: Obtener todas las insignias
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
+ *       - TokenAuth: []
  *     responses:
  *       200:
  *         description: Lista de insignias obtenida exitosamente
@@ -876,14 +820,8 @@ router.get("/badges/all", authMiddleware, userController.getAllBadges);
  *     summary: Obtener insignia por ID
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -947,14 +885,8 @@ router.get("/badges/:id", authMiddleware, userController.getBadgeById);
  *     summary: Obtener insignias de un usuario específico
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true

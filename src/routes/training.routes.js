@@ -131,10 +131,11 @@ const {trainingSchema} = require("../validation/trainings.validation")
  *           type: string
  *           description: Detalles del error
  *   securitySchemes:
- *     BearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *     TokenAuth:
+ *       type: apiKey
+ *       in: header
+ *       name: token
+ *       description: Token de autenticación JWT
  */
 
 /**
@@ -151,14 +152,7 @@ const {trainingSchema} = require("../validation/trainings.validation")
  *     summary: Crear un nuevo entrenamiento
  *     tags: [Trainings]
  *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
+ *       - TokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -188,14 +182,8 @@ router.post("/",authMiddleware, validate(trainingSchema) ,trainingController.cre
  *     summary: Obtener entrenamiento por ID
  *     tags: [Trainings]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -288,14 +276,8 @@ router.get("/:id", authMiddleware, trainingController.getTrainingById)
  *     summary: Obtener todos los entrenamientos de un usuario
  *     tags: [Trainings]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
@@ -386,14 +368,8 @@ router.get("/user/:id", authMiddleware, trainingController.getTrainingsByUserId)
  *     summary: Obtener entrenamientos semanales de un usuario
  *     tags: [Trainings]
  *     security:
- *       - BearerAuth: []
+ *       - TokenAuth: []
  *     parameters:
- *       - in: header
- *         name: user-id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario autenticado
  *       - in: path
  *         name: id
  *         required: true
