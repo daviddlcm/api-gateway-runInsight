@@ -165,7 +165,44 @@ const {trainingSchema} = require("../validation/trainings.validation")
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/TrainingResponse'
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de éxito
+ *                   example: "Entrenamiento creado correctamente"
+ *                 newBadges:
+ *                   type: array
+ *                   description: Lista de nuevas insignias obtenidas
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: number
+ *                         description: ID de la insignia
+ *                         example: 5
+ *                       name:
+ *                         type: string
+ *                         description: Nombre de la insignia
+ *                         example: "Maratón Virtual"
+ *                       description:
+ *                         type: string
+ *                         description: Descripción de la insignia
+ *                         example: "Corre 42 km acumulados en una semana."
+ *                       url_icon:
+ *                         type: string
+ *                         description: URL del ícono de la insignia
+ *                         example: "https://res.cloudinary.com/dpz2wx43s/image/upload/v1751575435/badges/medalla_gpdasb.png"
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: Fecha de creación
+ *                         example: "2025-07-07T19:19:44.000Z"
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                         description: Fecha de última actualización
+ *                         example: "2025-07-07T19:19:44.000Z"
  *       500:
  *         description: Error al crear entrenamiento
  *         content:

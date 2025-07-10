@@ -9,7 +9,10 @@ const createTraining = async (req,res) => {
         //console.log("Creating training:", trainingData);
         const createdTraining = await trainingService.createTraining(userId,trainingData);
         //const createdTraining = { message:"true"}
-        return res.status(201).json(createdTraining);
+        return res.status(201).json({
+            message: "Entrenamiento creado correctamente",
+            newBadges: createdTraining,
+    });
     }catch(error){
         return res.status(500).json({message: "Error al crear el entrenamiento", error: error.response.data.error})
     }

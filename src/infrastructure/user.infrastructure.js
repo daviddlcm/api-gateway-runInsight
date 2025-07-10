@@ -48,12 +48,13 @@ const getAllMyFriends = async (userId) => {
   return response.data;
 };
 
-const updateRythmKmCounter = async (userIdMe, rhythm, km) => {
+const updateRythmKmCounter = async (userIdMe, rhythm, km, totalKm) => {
   // console.log("Updating rhythm and km for user:", userIdMe);
   // console.log("Rhythm:", rhythm, "KM:", km);
   const response = await axios.patch(`${userServiceUrl}/users/stats`,{
     rhythm,
-    km
+    km,
+    totalKm
   }, {
     headers: {
       "user-id": userIdMe

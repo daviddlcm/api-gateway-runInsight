@@ -30,6 +30,8 @@ const getTrainingsByUserId = async (userIdMe, userId) => {
 }
 
 const getWeeklyTrainingsByUserId = async (userIdMe, userId) => {
+    // console.log("userIdMe: ", userIdMe)
+    // console.log("userId: ", userId)
     const response = await axios.get(`${trainingServiceUrl}/trainings/weekly-distance/${userId}`, {
         headers: {
             "user-id": userIdMe,
