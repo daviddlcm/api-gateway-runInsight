@@ -1,34 +1,35 @@
 const axios = require("axios");
 const FormData = require("form-data");
-const userServiceUrl = process.env.USER_SERVICE_URL;
 const fs = require("fs-extra");
 const path = require("path");
 
-//console.log("User Service URL:", userServiceUrl);
-//console.log("User Service URL:", process.env.USER_SERVICE_URL);
+// Cliente axios configurado para el microservicio de usuarios
+const userApiClient = axios.create({
+  baseURL: process.env.USER_SERVICE_URL,
+  headers: {
+    'x-internal-token': process.env.INTERNAL_TOKEN,
+  },
+});
 
 const postUser = async (requestUser) => {
-  //console.log("User Service URL:", userServiceUrl);
   //console.log("Request User:", requestUser);
-  const response = await axios.post(`${userServiceUrl}/users`, requestUser);
+  const response = await userApiClient.post('/users', requestUser);
   //console.log("Response from User Service:", response.data);
   return response.data;
 };
 
 const getUserById = async (userId) => {
-  const response = await axios.get(`${userServiceUrl}/users/${userId}`);
+  const response = await userApiClient.get(`/users/${userId}`);
   return response.data;
 };
 
 const updateUser = async (userId, updatedUser) => {
-  const response = await axios.patch(
-    `${userServiceUrl}/users/${userId}`,
-    updatedUser
-  );
+  const response = await userApiClient.patch(`/users/${userId}`, updatedUser);
   return response.data;
 };
+
 const loginUser = async (email, password) => {
-  const response = await axios.post(`${userServiceUrl}/users/login`, {
+  const response = await userApiClient.post('/users/login', {
     email,
     password,
   });
@@ -36,7 +37,7 @@ const loginUser = async (email, password) => {
 };
 
 const addFriend = async (userId, friendId) => {
-  const response = await axios.post(`${userServiceUrl}/friends`, {
+  const response = await userApiClient.post('/friends', {
     userId,
     friendId,
   });
@@ -44,14 +45,14 @@ const addFriend = async (userId, friendId) => {
 };
 
 const getAllMyFriends = async (userId) => {
-  const response = await axios.get(`${userServiceUrl}/friends/${userId}`);
+  const response = await userApiClient.get(`/friends/${userId}`);
   return response.data;
 };
 
 const updateRythmKmCounter = async (userIdMe, rhythm, km, totalKm) => {
   // console.log("Updating rhythm and km for user:", userIdMe);
   // console.log("Rhythm:", rhythm, "KM:", km);
-  const response = await axios.patch(`${userServiceUrl}/users/stats`,{
+  const response = await userApiClient.patch('/users/stats', {
     rhythm,
     km,
     totalKm
@@ -65,7 +66,7 @@ const updateRythmKmCounter = async (userIdMe, rhythm, km, totalKm) => {
   return response.data;
 }
 
-const addEvent = async (userId, file,dateEvent) => {
+const addEvent = async (userId, file, dateEvent) => {
   const formData = new FormData();
   //console.log("File received:", file);
   //console.log("entro")
@@ -85,13 +86,9 @@ const addEvent = async (userId, file,dateEvent) => {
   //formData.get("file");
 
   try {
-    const response = await axios.post(
-      `${userServiceUrl}/events/${userId}`,
-      formData,
-      {
-        headers: formData.getHeaders(),
-      }
-    );
+    const response = await userApiClient.post(`/events/${userId}`, formData, {
+      headers: formData.getHeaders(),
+    });
     return response.data;
   } finally {
     await fs.unlink(tempPath)
@@ -99,41 +96,41 @@ const addEvent = async (userId, file,dateEvent) => {
 };
 
 const getAllEvents = async () => {
-  const response = await axios.get(`${userServiceUrl}/events`);
+  const response = await userApiClient.get('/events');
   return response.data;
 };
 
 const getEventById = async (eventId) => {
-  const response = await axios.get(`${userServiceUrl}/events/${eventId}`);
+  const response = await userApiClient.get(`/events/${eventId}`);
   return response.data;
 };
 
 const getEventFuture = async (date) => {
-//console.log("Date received:", date);
-  const response = await axios.get(`${userServiceUrl}/events/by/future`,{
-    params: { date}
+  //console.log("Date received:", date);
+  const response = await userApiClient.get('/events/by/future', {
+    params: { date }
   });
   return response.data;
 };
 
 const getAllBadges = async () => {
-  const response = await axios.get(`${userServiceUrl}/badges`);
+  const response = await userApiClient.get('/badges');
   //console.log(response.data)
   return response.data;
 }
 
 const getBadgeById = async (badgeId) => {
-  const response = await axios.get(`${userServiceUrl}/badges/${badgeId}`);
+  const response = await userApiClient.get(`/badges/${badgeId}`);
   return response.data;
 };
 
 const getBadgesByUserId = async (userId) => {
-  const response = await axios.get(`${userServiceUrl}/badges/user/${userId}`);
+  const response = await userApiClient.get(`/badges/user/${userId}`);
   return response.data;
 };
 
 const addBadgeToUser = async (userId, badgeId) => {
-  const response = await axios.post(`${userServiceUrl}/badges/user`, {
+  const response = await userApiClient.post('/badges/user', {
     badgeId,
   }, {
     headers: {

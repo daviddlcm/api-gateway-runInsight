@@ -17,7 +17,7 @@ const authMiddleware = async(req,res,next) =>{
         //console.log("Validating token:", token)
         //console.log("Auth Host:", authHost)
         const response = await axios.get(`${authHost}/users/validate/token`,{
-            headers: {token: token}
+            headers: {token: token, "x-internal-token": process.env.INTERNAL_TOKEN}
         })
         //console.log(response.data.user)
 
@@ -34,7 +34,8 @@ const authMiddleware = async(req,res,next) =>{
         }
     }catch(error){
         return res.status(401).json({
-            error: "Token verification failed"
+            error: "Token verification failed",
+            message: error.message
         })
     }
 }

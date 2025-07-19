@@ -1,9 +1,15 @@
-const axios = require("axios")
+const axios = require("axios");
 
-const trainingServiceUrl = process.env.TRAINING_SERVICE_URL;
+// Cliente axios configurado para el microservicio de entrenamientos
+const trainingApiClient = axios.create({
+  baseURL: process.env.TRAINING_SERVICE_URL,
+  headers: {
+    'x-internal-token': process.env.INTERNAL_TOKEN,
+  },
+});
 
-const createTraining = async (userId,trainingData) => {
-    const response = await axios.post(`${trainingServiceUrl}/trainings`, trainingData, {
+const createTraining = async (userId, trainingData) => {
+    const response = await trainingApiClient.post('/trainings', trainingData, {
         headers: {
             "user-id": userId,
         }
@@ -11,8 +17,8 @@ const createTraining = async (userId,trainingData) => {
     return response.data;
 }
 
-const getTrainingById = async (userId,trainingId) => {
-    const response = await axios.get(`${trainingServiceUrl}/trainings/${trainingId}`, {
+const getTrainingById = async (userId, trainingId) => {
+    const response = await trainingApiClient.get(`/trainings/${trainingId}`, {
         headers: {
             "user-id": userId,
         }
@@ -21,7 +27,7 @@ const getTrainingById = async (userId,trainingId) => {
 }
 
 const getTrainingsByUserId = async (userIdMe, userId) => {
-    const response = await axios.get(`${trainingServiceUrl}/trainings/user/${userId}`, {
+    const response = await trainingApiClient.get(`/trainings/user/${userId}`, {
         headers: {
             "user-id": userIdMe,
         }
@@ -32,7 +38,7 @@ const getTrainingsByUserId = async (userIdMe, userId) => {
 const getWeeklyTrainingsByUserId = async (userIdMe, userId) => {
     // console.log("userIdMe: ", userIdMe)
     // console.log("userId: ", userId)
-    const response = await axios.get(`${trainingServiceUrl}/trainings/weekly-distance/${userId}`, {
+    const response = await trainingApiClient.get(`/trainings/weekly-distance/${userId}`, {
         headers: {
             "user-id": userIdMe,
         }
