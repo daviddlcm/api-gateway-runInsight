@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 
 const userRoutes = require("./src/routes/user.routes")
 const trainingRoutes = require("./src/routes/training.routes")
+const chatbotRoutes = require("./src/routes/chatbot.routes")
 
 app.use(express.json());
 
@@ -25,7 +26,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users",userRoutes)
 app.use("/trainings", trainingRoutes)
-
+app.use("/chatbot", chatbotRoutes)
 
 app.get('/health', (req, res) => {
   res.status(200).send('OK');

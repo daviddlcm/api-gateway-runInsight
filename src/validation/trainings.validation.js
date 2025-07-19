@@ -59,9 +59,9 @@ const trainingSchema = Joi.object({
   }),
 
   altitude: Joi.number()
-    .min(-500) // puede ser negativo si es altitud bajo el nivel del mar
+    .min(-500) 
     .max(9000)
-    .required() // el Everest tiene 8849 m
+    .required() 
     .messages({
       "number.base": "La altitud debe ser un número.",
       "number.min": "La altitud no puede ser menor a -500 m.",
