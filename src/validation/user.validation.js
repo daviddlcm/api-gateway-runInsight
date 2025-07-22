@@ -24,13 +24,13 @@ const createUserSchema = Joi.object({
     }),
 
   email: Joi.string()
-    .email({ tlds: { allow: false } })
+    .pattern(/^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9]+)*@([a-zA-Z0-9]+(-?[a-zA-Z0-9]+)*\.)+[a-zA-Z]{2,}$/)
     .max(255)
     .required()
     .messages({
       "string.base": "El email debe ser un texto.",
       "string.empty": "El email no puede estar vacío.",
-      "string.email": "El email debe tener un formato válido.",
+      "string.pattern.base": "El email debe tener un formato válido.",
       "string.max": "El email no puede exceder los 255 caracteres.",
       "any.required": "El email es requerido.",
     }),
@@ -38,7 +38,7 @@ const createUserSchema = Joi.object({
   password: Joi.string()
     .min(8)
     .max(128)
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
     .required()
     .messages({
       "string.base": "La contraseña debe ser un texto.",
@@ -186,7 +186,7 @@ const updateUserStatsSchema = Joi.object({
       "any.required": "La altura es requerida.",
     }),
 
-  exp_level: Joi.string()
+  experience: Joi.string()
     .valid("Principiante", "Intermedio", "Avanzado", "Experto", "Maestro")
     .required()
     .messages({
