@@ -24,7 +24,7 @@ const { generalLimiter } = require('./src/config/rate.limit.config');
 app.use(express.json());
 
 //app.use(rateLimit(generalLimiter));
-//app.set('trust proxy', true)
+app.set('trust proxy', true)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users",userRoutes)
 app.use("/trainings", trainingRoutes)
