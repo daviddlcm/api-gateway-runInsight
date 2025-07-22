@@ -6,6 +6,13 @@ const trainingController = require("../controllers/training.controller")
 const authMiddleware = require("../middlewares/auth.middleware")
 const validate = require("../middlewares/validation.middleware")
 const {trainingSchema} = require("../validation/trainings.validation")
+const rateLimit = require("../middlewares/rate.limit.middleware");
+const {
+  createTrainingLimiter,
+  getTrainingByIdLimiter,
+  getTrainingsByUserLimiter,
+  getWeeklyTrainingsLimiter
+} = require("../config/rate.limit.config");
 
 /**
  * @swagger
@@ -210,7 +217,8 @@ const {trainingSchema} = require("../validation/trainings.validation")
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/",authMiddleware, validate(trainingSchema) ,trainingController.createTraining)
+// Crear entrenamiento
+router.post("/",authMiddleware, rateLimit(createTrainingLimiter), validate(trainingSchema) ,trainingController.createTraining)
 
 /**
  * @swagger
@@ -304,7 +312,8 @@ router.post("/",authMiddleware, validate(trainingSchema) ,trainingController.cre
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/:id", authMiddleware, trainingController.getTrainingById)
+// Obtener entrenamiento por ID
+router.get("/:id", authMiddleware, rateLimit(getTrainingByIdLimiter), trainingController.getTrainingById)
 
 /**
  * @swagger
@@ -396,7 +405,8 @@ router.get("/:id", authMiddleware, trainingController.getTrainingById)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/user/:id", authMiddleware, trainingController.getTrainingsByUserId)
+// Obtener todos los entrenamientos de un usuario
+router.get("/user/:id", authMiddleware, rateLimit(getTrainingsByUserLimiter), trainingController.getTrainingsByUserId)
 
 /**
  * @swagger
@@ -454,6 +464,7 @@ router.get("/user/:id", authMiddleware, trainingController.getTrainingsByUserId)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/weekly-distance/:id", authMiddleware, trainingController.getWeeklyTrainingsByUserId)
+// Obtener entrenamientos semanales de un usuario
+router.get("/weekly-distance/:id", authMiddleware, rateLimit(getWeeklyTrainingsLimiter), trainingController.getWeeklyTrainingsByUserId)
 
 module.exports = router;

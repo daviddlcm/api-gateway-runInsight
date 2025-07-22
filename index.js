@@ -4,7 +4,7 @@ const fileUpload = require("express-fileupload")
 const cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./src/configs/swagger.config');
-
+const rateLimit = require('./src/middlewares/rate.limit.middleware');
 const app = express();
 
 // app.use(fileUpload({
@@ -19,10 +19,12 @@ const PORT = process.env.PORT || 3000;
 const userRoutes = require("./src/routes/user.routes")
 const trainingRoutes = require("./src/routes/training.routes")
 const chatbotRoutes = require("./src/routes/chatbot.routes")
+const { generalLimiter } = require('./src/config/rate.limit.config');
 
 app.use(express.json());
 
-
+//app.use(rateLimit(generalLimiter));
+//app.set('trust proxy', true)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users",userRoutes)
 app.use("/trainings", trainingRoutes)

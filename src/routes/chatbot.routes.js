@@ -5,6 +5,13 @@ const chatbotController = require("../controllers/chatbot.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 const validate = require("../middlewares/validation.middleware");
 const { questionRequestSchema } = require("../validation/chatbot.validation");
+const rateLimit = require("../middlewares/rate.limit.middleware");
+const {
+  classifyLimiter,
+  getStatsLimiter,
+  getStatsWeeklyLimiter,
+  getCategoriesLimiter
+} = require("../config/rate.limit.config");
 
 
 /**
@@ -317,7 +324,7 @@ const { questionRequestSchema } = require("../validation/chatbot.validation");
  *               error: "Error al clasificar la pregunta"
  *               message: "Error interno del servidor"
  */
-router.post("/text-mining/classify", authMiddleware, validate(questionRequestSchema), chatbotController.clasifyQuestion);
+router.post("/text-mining/classify", authMiddleware, rateLimit(classifyLimiter), validate(questionRequestSchema), chatbotController.clasifyQuestion);
 
 /**
  * @swagger
@@ -378,7 +385,7 @@ router.post("/text-mining/classify", authMiddleware, validate(questionRequestSch
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/text-mining/stats/:id", authMiddleware, chatbotController.getStatsByUserId);
+router.get("/text-mining/stats/:id", authMiddleware, rateLimit(getStatsLimiter), chatbotController.getStatsByUserId);
 
 /**
  * @swagger
@@ -448,7 +455,7 @@ router.get("/text-mining/stats/:id", authMiddleware, chatbotController.getStatsB
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/text-mining/stats/:id/weekly", authMiddleware, chatbotController.getStatsWeeklyByUserId);
+router.get("/text-mining/stats/:id/weekly", authMiddleware, rateLimit(getStatsWeeklyLimiter), chatbotController.getStatsWeeklyByUserId);
 
 /**
  * @swagger
@@ -513,7 +520,7 @@ router.get("/text-mining/stats/:id/weekly", authMiddleware, chatbotController.ge
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/text-mining/categories", authMiddleware, chatbotController.getCategories);
+router.get("/text-mining/categories", authMiddleware, rateLimit(getCategoriesLimiter), chatbotController.getCategories);
 
 
 

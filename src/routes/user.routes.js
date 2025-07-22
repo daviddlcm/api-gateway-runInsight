@@ -13,6 +13,17 @@ const router = express.Router();
 const userController = require("../controllers/user.cotroller");
 const authMiddleware = require("../middlewares/auth.middleware");
 const fileUpload = require("express-fileupload");
+const rateLimit = require("../middlewares/rate.limit.middleware");
+const {
+  registerLimiter,
+  loginLimiter,
+  updateUserLimiter,
+  addFriendLimiter,
+  getFriendsLimiter,
+  addEventLimiter,
+  getEventsLimiter,
+  getBadgesLimiter
+} = require("../config/rate.limit.config");
 
 /**
  * @swagger
@@ -177,7 +188,7 @@ const fileUpload = require("express-fileupload");
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/", validate(createUserSchema), userController.createUser);
+router.post("/", rateLimit(registerLimiter), validate(createUserSchema), userController.createUser);
 
 /**
  * @swagger
@@ -326,6 +337,7 @@ router.get("/:id", authMiddleware, userController.getUserById);
 router.patch(
   "/:id",
   authMiddleware,
+  rateLimit(updateUserLimiter),
   validate(updateUserStatsSchema),
   userController.updateUser
 );
@@ -380,7 +392,7 @@ router.patch(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/login", validate(loginSchema), userController.loginUser);
+router.post("/login", rateLimit(loginLimiter), validate(loginSchema), userController.loginUser);
 
 /**
  * @swagger
@@ -422,6 +434,7 @@ router.post("/login", validate(loginSchema), userController.loginUser);
 router.post(
   "/friends",
   authMiddleware,
+  rateLimit(addFriendLimiter),
   validate(addFriendSchema),
   userController.addFriend
 );
@@ -493,7 +506,7 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/friends/:id", authMiddleware, userController.getAllMyFriends);
+router.get("/friends/:id", authMiddleware, rateLimit(getFriendsLimiter), userController.getAllMyFriends);
 
 /**
  * @swagger
@@ -556,6 +569,7 @@ router.get("/friends/:id", authMiddleware, userController.getAllMyFriends);
 router.post(
   "/event/:id",
   authMiddleware,
+  rateLimit(addEventLimiter),
   fileUpload({ useTempFiles: true, tempFileDir: "./temp" }),
   userController.addEvent
 );
@@ -623,7 +637,7 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/events/all", authMiddleware, userController.getAllEvents);
+router.get("/events/all", authMiddleware, rateLimit(getEventsLimiter), userController.getAllEvents);
 
 /**
  * @swagger
@@ -693,7 +707,7 @@ router.get("/events/all", authMiddleware, userController.getAllEvents);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/events/:id", authMiddleware, userController.getEventById);
+router.get("/events/:id", authMiddleware, rateLimit(getEventsLimiter), userController.getEventById);
 
 /**
  * @swagger
@@ -766,7 +780,7 @@ router.get("/events/:id", authMiddleware, userController.getEventById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/events/by/future", authMiddleware, userController.getEventFuture);
+router.get("/events/by/future", authMiddleware, rateLimit(getEventsLimiter), userController.getEventFuture);
 
 /**
  * @swagger
@@ -826,7 +840,7 @@ router.get("/events/by/future", authMiddleware, userController.getEventFuture);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/badges/all", authMiddleware, userController.getAllBadges);
+router.get("/badges/all", authMiddleware, rateLimit(getBadgesLimiter), userController.getAllBadges);
 
 /**
  * @swagger
@@ -891,7 +905,7 @@ router.get("/badges/all", authMiddleware, userController.getAllBadges);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/badges/:id", authMiddleware, userController.getBadgeById);
+router.get("/badges/:id", authMiddleware, rateLimit(getBadgesLimiter), userController.getBadgeById);
 
 /**
  * @swagger
@@ -961,6 +975,7 @@ router.get("/badges/:id", authMiddleware, userController.getBadgeById);
 router.get(
   "/badges/user/:id",
   authMiddleware,
+  rateLimit(getBadgesLimiter),
   userController.getBadgesByUserId
 );
 

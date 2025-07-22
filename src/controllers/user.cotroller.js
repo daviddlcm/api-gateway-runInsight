@@ -55,7 +55,7 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await userService.loginUser(email, password);
-    
+    //console.log(req.ip)
     return res.status(200).json(user);
   } catch (error) {
     // console.error("Error logging in:", error);
@@ -135,6 +135,7 @@ const addEvent = async (req, res) => {
 const getAllEvents = async (req, res) => {
   try {
     //console.log("Fetching all events");
+    //console.log("estoy usando la user-id")
     const events = await userService.getAllEvents();
     return res.status(200).json(events);
   } catch (error) {
