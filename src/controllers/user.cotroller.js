@@ -97,7 +97,7 @@ const addEvent = async (req, res) => {
   // Assuming you're using multer for file uploads
   //console.log("File received:", file);
   try {
-    const userId = req.params.id;
+    const userId = req.headers["user-id"];
     const file = req.files?.file;
     const dateEvent = req.body.date_event;
     //console.log(req.body.date_event)

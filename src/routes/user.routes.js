@@ -510,19 +510,12 @@ router.get("/friends/:id", authMiddleware, rateLimit(getFriendsLimiter), userCon
 
 /**
  * @swagger
- * /users/event/{id}:
+ * /users/event:
  *   post:
- *     summary: Agregar evento para un usuario
+ *     summary: Agregar evento para el usuario autenticado
  *     tags: [Users]
  *     security:
  *       - TokenAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario para el cual se agrega el evento
  *     requestBody:
  *       required: true
  *       content:
@@ -567,7 +560,7 @@ router.get("/friends/:id", authMiddleware, rateLimit(getFriendsLimiter), userCon
  *               $ref: '#/components/schemas/Error'
  */
 router.post(
-  "/event/:id",
+  "/event",
   authMiddleware,
   rateLimit(addEventLimiter),
   fileUpload({ useTempFiles: true, tempFileDir: "./temp" }),
