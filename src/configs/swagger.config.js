@@ -22,6 +22,16 @@ const options = {
     //     description: "Training Service Server",
     //   },
     ],
+    components: {
+      securitySchemes: {
+        TokenAuth: {
+          type: "apiKey",
+          in: "header",
+          name: "token",
+          description: "Token de autenticación de usuario"
+        }
+      }
+    }
   },
   apis: ["./src/routes/*.js"], // Ruta corregida a los archivos de rutas donde están los comentarios Swagger
 };

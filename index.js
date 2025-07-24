@@ -19,16 +19,18 @@ const PORT = process.env.PORT || 3000;
 const userRoutes = require("./src/routes/user.routes")
 const trainingRoutes = require("./src/routes/training.routes")
 const chatbotRoutes = require("./src/routes/chatbot.routes")
+const engagementRoutes = require("./src/routes/engagement.routes")
 const { generalLimiter } = require('./src/config/rate.limit.config');
 
 app.use(express.json());
 
 //app.use(rateLimit(generalLimiter));
-app.set('trust proxy', true)
+app.set('trust proxy', 1)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users",userRoutes)
 app.use("/trainings", trainingRoutes)
 app.use("/chatbot", chatbotRoutes)
+app.use("/engagement", engagementRoutes)
 
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
